@@ -366,3 +366,7 @@ To run PPO instead of SAPG, use the same commands and change only the train conf
 ## Real-World Deployment
 
 refer to [deploy.md](deploy.md) for details
+
+## Acknowledgements
+
+We thank the authors and contributors of [ArtGym](https://github.com/youngcv/artgym), [Lightning Grasp](https://github.com/zhaohengyin/lightning-grasp), and [Hora](https://github.com/HaozhiQi/hora) for sharing their code and research with the community. We appreciate their contributions to open-source robotics research.
