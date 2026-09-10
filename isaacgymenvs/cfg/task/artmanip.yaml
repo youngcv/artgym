@@ -1,0 +1,78 @@
+# used to create the object
+name: artmanip
+
+physics_engine: ${..physics_engine}
+
+# if given, will override the device setting in gym.
+env: 
+  numEnvs: ${resolve_default:16384,${...num_envs}}
+  envSpacing: 0.75
+  episodeLength: 1200 # Not used, but would be 8 sec if resetTime is not set
+  enableDebugVis: False
+  # PhysX aggregate buffers blow up at very large env counts for this task
+  # because each env contains both a hand and articulated object actor.
+  aggregateMode: 0
+  successHoldDurationSec: 1.5
+  successHoldDurationRangeSec: [0.0, 2.0]
+  maxConsecutiveSuccesses: 20
+  goalSwitchTimeoutSec: 10.0
+  jointNoise: 0.01
+  dofSpeedScale: 1.0
+  useRelativeControl: True
+  graspSplit: train
+  rewardWeightCurriculum:
+    ObjPosDeviation: -5.0
+    ObjRotDeviation: -0.2
+    StableContact: 0.1
+  rewardWeightCurriculumSchedule:
+    warmupSteps: 200
+    totalSteps: 2000
+  binaryTactileThreshold: 0.05
+
+  actionsMovingAverage: 0.01
+  controlFrequencyInv: 4
+
+  # Random forces applied to the object
+  forceScale: 2.0
+  forceProbRange: [0.001, 0.1]
+  forceDecay: 0.99
+  forceDecayInterval: 0.08
+
+  policyObsDim: 117
+  privilegedObsDim: 21
+  # Student obs dimensions are derived in code from proprioHistoryLen,
+  # hand action dim, and the init observation layout.
+  proprioHistoryLen: 50
+  enableCameraSensors: False
+  # set to True if you use camera sensors in the environment
+  camera:
+    height: 1080
+    width: 1920
+    horizontal_fov: 75
+    use_collision_geometry: True
+    cam_pos: [0.0, 0.2, 1.0]
+    cam_target: [0.0, -0.15, 0.5]
+task:
+  randomize: True
+  randomization_params: {}
+
+sim:
+  dt: 0.0083333 # 1/120
+  substeps: 4
+  up_axis: "z"
+  use_gpu_pipeline: ${eq:${...pipeline},"gpu"}
+  gravity: [0.0, 0.0, -9.81]
+  physx:
+    num_threads: ${....num_threads}
+    solver_type: ${....solver_type}
+    use_gpu: ${contains:"cuda",${....sim_device}} # set to False to run on CPU
+    num_position_iterations: 16
+    num_velocity_iterations: 4
+    max_gpu_contact_pairs: 8388608 # 8*1024*1024
+    num_subscenes: ${....num_subscenes}
+    contact_offset: 0.002
+    rest_offset: 0.0
+    bounce_threshold_velocity: 0.2
+    max_depenetration_velocity: 1000.0
+    default_buffer_size_multiplier: 5.0
+    contact_collection: 2 # 0: CC_NEVER (don't collect contact info), 1: CC_LAST_SUBSTEP (collect only contacts on last substep), 2: CC_ALL_SUBSTEPS ((broken - do not use!)

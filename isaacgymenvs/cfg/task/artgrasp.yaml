@@ -1,0 +1,11 @@
+name: artgrasp
+defaults:
+  - artmanip
+env:
+  camera:
+    height: 256
+    width: 256
+    horizontal_fov: 65
+    use_collision_geometry: True
+    cam_pos: [0.0, 0.05, 0.75]
+    cam_target: [0.0, -0.1, 0.5]

@@ -1,0 +1,6 @@
+[submodule "make_data"]
+	path = make_data
+	url = git@github.com:youngcv/make_data.git
+[submodule "func_lygra"]
+	path = func_lygra
+	url = git@github.com:youngcv/func_lygra.git

@@ -1,0 +1,42 @@
+task_name: ${task.name}
+experiment: ""
+
+num_envs: ""
+seed: 42
+torch_deterministic: False
+max_iterations: ""
+
+physics_engine: "physx"
+pipeline: "gpu"
+sim_device: "cuda:0"
+rl_device: "cuda:0"
+graphics_device_id: 0
+
+num_threads: 4
+solver_type: 1
+num_subscenes: 4
+
+test: False
+checkpoint: ""
+sigma: ""
+multi_gpu: False
+asset_dir: ""
+capture_video: False
+capture_video_freq: 1500
+capture_video_len: 100
+force_render: True
+headless: False
+
+defaults:
+  - task: artmanip
+  - object: knife
+  - hand: sharpa
+  - train: ${task}LSTMPPO
+  - pbt: no_pbt
+  - override hydra/job_logging: disabled
+  - _self_
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .

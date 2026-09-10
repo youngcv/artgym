@@ -1,0 +1,56 @@
+task:
+  success_threshold: 0.05
+  rot_devia_threshold: 1.57
+  pos_devia_threshold: 0.1
+  goals: [0.3,0.0]
+  contact_num: 5
+asset:
+  type: 'stapler'
+  asset_root: 'assets/objects/stapler'
+  instance_id_list: ['']
+  asset_file: 'mobility.urdf'
+  initDof: lower
+  disgravity_part: ['link_1']
+  disfriction_part: []
+  disrbforce_part: []
+  dissimulate_part: []
+default_props:
+  mass: [0.03,0.03]
+  friction: 3.0
+  dof_stiffness: 12.0
+  dof_damping: 0.01
+randomization:
+  randomize: True
+  dof_properties:
+    stiffness:
+      range: [0.7, 1.3]
+      operation: "scaling"
+      distribution: "uniform"
+  rigid_body_properties:
+    by_body:
+      "link_0":
+        mass:
+          range: [1.0, 3.0]
+          operation: "scaling"
+          distribution: "uniform"
+      "link_1":
+        mass:
+          range: [1.0, 3.0]
+          operation: "scaling"
+          distribution: "uniform"
+  rigid_shape_properties:
+    friction:
+      num_buckets: 250
+      range: [-1.0, +1.0] #[0.7, 1.3]
+      operation: "additive"
+      distribution: "uniform"
+reward:
+  ObjPosDeviation: -50.0
+  ObjRotDeviation: -2.0
+  HandQposDeviation: -0.001
+  StableContact: 1.0
+  GoalDistance1: 100.0
+  GoalDistance2: 1.0
+  Smooth: -1.0
+  Drop: -1.0
+  Success: 50.0
